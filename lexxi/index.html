@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#160f22">
+<title>For Lexxi 💜</title>
+<style>
+:root{--bg:#160f22;--panel:#241a31;--text:#f6f0fc;--muted:#bcaecb;--lav:#c8a9f4;--accent:#9568c7}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse at 50% 0%,#342047 0%,var(--bg) 58%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
+.hearts{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.heart{position:absolute;bottom:-35px;color:#c6a2ed;opacity:0;animation:floatUp linear infinite;filter:drop-shadow(0 0 9px #a879dd55)}
+@keyframes floatUp{0%{transform:translateY(0) rotate(-12deg);opacity:0}12%{opacity:.2}82%{opacity:.16}100%{transform:translateY(-115vh) rotate(18deg);opacity:0}}
+header,main,footer{position:relative;z-index:1}
+header{width:min(1050px,calc(100% - 44px));margin:auto;padding:28px 0;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:21px;letter-spacing:.07em;font-weight:750;color:#e4d2fa}
+.tag,.eyebrow{font-size:10px;letter-spacing:.2em;color:#ad98c2}
+main{width:min(760px,calc(100% - 44px));margin:auto}
+section{min-height:82vh;display:flex;flex-direction:column;justify-content:center;padding:70px 0}
+.eyebrow{color:var(--lav);font-weight:650}
+h1{font-size:clamp(60px,12vw,100px);line-height:.98;letter-spacing:-.065em;margin:22px 0}
+h2{font-size:clamp(36px,7vw,58px);line-height:1.08;letter-spacing:-.05em;margin:18px 0}
+.gradient{background:linear-gradient(110deg,#f5eaff,#bd95eb);-webkit-background-clip:text;background-clip:text;color:transparent}
+p{color:var(--muted);line-height:1.9;font-size:16px;max-width:590px;margin:14px 0}
+.button{display:inline-flex;align-items:center;gap:10px;width:fit-content;margin-top:25px;padding:15px 24px;border-radius:30px;background:var(--accent);color:white;text-decoration:none;border:1px solid #c7a5ef55;font-size:14px;font-weight:650;cursor:pointer;transition:.3s;box-shadow:0 8px 30px #9568c733}
+.button:hover{background:#ad83dc;transform:translateY(-3px)}
+.divider{width:55px;height:1px;background:#a17ac8;margin:25px 0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:25px}
+.item{padding:22px;background:#241a31cc;border:1px solid #ffffff12;border-radius:15px;color:#e6d8f5;line-height:1.6;backdrop-filter:blur(8px)}
+.item span{display:block;color:#a982d1;font-size:11px;letter-spacing:2px;margin-bottom:12px}
+.question{text-align:center;align-items:center}
+.question p{max-width:480px}
+.buttons{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.secondary{background:transparent;border:1px solid #9c7cba;box-shadow:none;color:#ddc9f0}
+#response{color:#d7b9f6;margin-top:25px;min-height:30px}
+footer{text-align:center;padding:30px;color:#806e90;font-size:10px;letter-spacing:2px}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.reveal.show{opacity:1;transform:translateY(0)}
+@media(max-width:550px){.grid{grid-template-columns:1fr}.tag{font-size:8px;letter-spacing:1px}section{min-height:76vh}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="hearts" id="hearts" aria-hidden="true"></div>
+<header><div class="logo">lexxi.</div><div class="tag">A LITTLE SOMETHING FOR YOU</div></header>
+<main>
+<section class="reveal">
+<div class="eyebrow">01 / START HERE</div>
+<h1>Hey,<br><span class="gradient">Lexxi.</span></h1>
+<p>I've been wanting to ask you something, and I figured this would be a little more memorable than just sending a text.</p>
+<a href="#message" class="button">Continue <span>↗</span></a>
+</section>
+<section id="message" class="reveal">
+<div class="eyebrow">02 / A NOTE FOR YOU</div>
+<h2>There's something I want you to know.</h2>
+<div class="divider"></div>
+<p>I've genuinely enjoyed getting to know you. I like our conversations, the little things about you, and the way spending time with you has become something I look forward to.</p>
+<p>I don't want to rush anything or make promises just for the sake of saying them. I just know that I'd like the chance to build something meaningful with you.</p>
+<a href="#reasons" class="button">Keep going <span>→</span></a>
+</section>
+<section id="reasons" class="reveal">
+<div class="eyebrow">03 / THE LITTLE THINGS</div>
+<h2>Things I appreciate about you.</h2>
+<p>A few things that stand out to me.</p>
+<div class="grid">
+<div class="item"><span>01</span>Your personality</div>
+<div class="item"><span>02</span>The way you make me feel comfortable</div>
+<div class="item"><span>03</span>Your willingness to improve</div>
+<div class="item"><span>04</span>The little things that make you, you</div>
+</div>
+<a href="#question" class="button">One more thing <span>→</span></a>
+</section>
+<section id="question" class="question reveal">
+<div class="eyebrow">04 / THE QUESTION</div>
+<h2 class="gradient">Lexxi, will you be my girlfriend?</h2>
+<p>No pressure to have the perfect answer. I just wanted to ask you properly.</p>
+<div class="buttons">
+<button class="button" id="yes">Yes 💜</button>
+<button class="button secondary" id="think">Let me think about it</button>
+</div>
+<div id="response" aria-live="polite"></div>
+</section>
+</main>
+<footer>MADE WITH INTENTION · FOR LEXXI 💜</footer>
+<script>
+const layer=document.getElementById('hearts');
+for(let i=0;i<13;i++){
+ const h=document.createElement('span');h.className='heart';h.textContent=i%2?'♡':'♥';
+ h.style.left=Math.random()*100+'%';h.style.fontSize=(12+Math.random()*13)+'px';
+ h.style.animationDuration=(18+Math.random()*17)+'s';h.style.animationDelay=(-Math.random()*30)+'s';layer.appendChild(h);
+}
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{
+ if(e.isIntersecting){e.target.classList.add('show');observer.unobserve(e.target)}
+}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+document.getElementById('yes').onclick=()=>document.getElementById('response').textContent="You just made me really happy. Here's to us. 💜";
+document.getElementById('think').onclick=()=>document.getElementById('response').textContent="Take your time. I want you to be comfortable with your answer. 💜";
+</script>
+</body>
+</html>
