@@ -462,6 +462,7 @@ const introMusic=document.getElementById('introMusic');
 const fullMusic=document.getElementById('fullMusic');
 const musicToggle=document.getElementById('musicToggle');
 let musicEnabled=false;
+let musicOptOut=false;
 let fullTrackStarted=false;
 function updateMusicButton(){
  musicToggle.classList.toggle('muted',!musicEnabled);
@@ -487,13 +488,13 @@ async function playMusicForCurrentSlide(){
 }
 musicToggle.addEventListener('click',async()=>{
  if(musicEnabled){
-  introMusic.pause();fullMusic.pause();musicEnabled=false;updateMusicButton();
+  introMusic.pause();fullMusic.pause();musicEnabled=false;musicOptOut=true;updateMusicButton();
  }else{
-  await playMusicForCurrentSlide();
+  musicOptOut=false;await playMusicForCurrentSlide();
  }
 });
 document.addEventListener('pointerdown',()=>{
- if(!musicEnabled)playMusicForCurrentSlide();
+ if(!musicEnabled&&!musicOptOut)playMusicForCurrentSlide();
 },{once:true});
 introMusic.volume=.42;
 fullMusic.volume=.58;
@@ -517,7 +518,7 @@ function showSlide(index){
  slideCounter.textContent=String(currentSlide+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
  prevSlide.disabled=currentSlide===0;
  nextSlide.innerHTML=currentSlide===slides.length-1?'Start again <span>↻</span>':'Continue <span>→</span>';
- if(slides[currentSlide].id==='question'){slides[currentSlide].classList.add('question-arrived');if(musicEnabled||!fullTrackStarted)playMusicForCurrentSlide();}
+ if(slides[currentSlide].id==='question'){slides[currentSlide].classList.add('question-arrived');if(musicEnabled||(!fullTrackStarted&&!musicOptOut))playMusicForCurrentSlide();}
  if(slides[currentSlide].id==='constellation')startStarCycle();
  if(slides[currentSlide].id==='letter')setTimeout(revealLetter,650);
 }
