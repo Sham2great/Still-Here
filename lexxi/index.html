@@ -117,6 +117,33 @@ footer{padding:30px 20px 45px;text-align:center;color:#74647f;font-size:9px;lett
 
 .auto-scroll-control{position:fixed;right:18px;bottom:18px;z-index:40;border:1px solid #cda8f077;background:#21162fe8;color:#eadbfa;border-radius:30px;padding:11px 16px;font-size:11px;letter-spacing:.05em;backdrop-filter:blur(14px);box-shadow:0 8px 30px #08040e66;cursor:pointer;opacity:0;pointer-events:none;transition:.3s}
 .auto-scroll-control.show{opacity:1;pointer-events:auto}
+
+/* The final question gets its own cinematic reveal, separate from every other section. */
+.final-section{isolation:isolate;overflow:hidden}
+.final-section:before{content:"";position:absolute;z-index:-1;inset:8% -18%;pointer-events:none;opacity:0;background:radial-gradient(ellipse at 50% 48%,#a76cdb45 0, #68418a22 34%,transparent 68%);transform:scale(.45)}
+.final-section.question-arrived:before{animation:questionSpotlight 2.8s ease-out forwards}
+.final-section .eyebrow,.final-section h2,.final-section>.lead,.final-section .final-card{opacity:0;transform:translateY(32px)}
+.final-section.question-arrived .eyebrow{animation:questionRise 1s .15s cubic-bezier(.2,.8,.2,1) forwards}
+.final-section.question-arrived h2{animation:questionTitle 1.8s .65s cubic-bezier(.16,1,.3,1) forwards}
+.final-section.question-arrived>.lead{animation:questionRise 1.2s 1.65s ease forwards}
+.final-section.question-arrived .final-card{animation:questionCard 1.6s 2.1s cubic-bezier(.16,1,.3,1) forwards}
+.final-section .final-card{position:relative;overflow:hidden}
+.final-section.question-arrived .final-card:before{content:"";position:absolute;inset:-2px;border-radius:inherit;padding:1px;background:conic-gradient(from 0deg,transparent,#e7caff,#9b66d2,transparent 55%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;animation:questionHalo 5s linear infinite}
+.final-section .heart-icon{display:inline-block}
+.final-section.question-arrived .heart-icon{animation:questionHeartbeat 1.5s 3.4s ease-in-out 3}
+.final-section .final-card h3{opacity:0;transform:scale(.88)}
+.final-section.question-arrived .final-card h3{animation:questionWords 1.15s 3.05s cubic-bezier(.16,1,.3,1) forwards}
+.final-section .final-buttons{opacity:0;transform:translateY(12px)}
+.final-section.question-arrived .final-buttons{animation:questionRise .9s 3.85s ease forwards}
+@keyframes questionSpotlight{0%{opacity:0;transform:scale(.45)}45%{opacity:1}100%{opacity:.8;transform:scale(1.15)}}
+@keyframes questionRise{to{opacity:1;transform:translateY(0)}}
+@keyframes questionTitle{0%{opacity:0;transform:translateY(55px);letter-spacing:.08em;filter:blur(9px)}65%{opacity:1;filter:blur(0)}100%{opacity:1;transform:translateY(0);letter-spacing:-.035em;filter:blur(0)}}
+@keyframes questionCard{0%{opacity:0;transform:translateY(55px) scale(.91);filter:blur(8px)}65%{opacity:1;filter:blur(0)}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes questionWords{to{opacity:1;transform:scale(1)}}
+@keyframes questionHeartbeat{0%,100%{transform:scale(1)}18%{transform:scale(1.3)}36%{transform:scale(1)}54%{transform:scale(1.18)}72%{transform:scale(1)}}
+@keyframes questionHalo{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.final-section.question-arrived *{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}}
+
 </style>
 </head>
 <body>
@@ -279,6 +306,14 @@ document.getElementById('time').addEventListener('click',()=>{document.getElemen
 
 // Guided auto-scroll: glide to each chapter, pause to read, then continue.
 const guidedSections=[...document.querySelectorAll('main > section')];
+const questionReveal=new IntersectionObserver(entries=>{
+ if(entries.some(entry=>entry.isIntersecting)){
+  document.getElementById('question').classList.add('question-arrived');
+  questionReveal.disconnect();
+ }
+},{threshold:.22});
+questionReveal.observe(document.getElementById('question'));
+
 const autoControl=document.getElementById('autoScrollControl');
 let guidedActive=false, guidedIndex=1, animationFrame=null, pauseTimer=null, startTimer=null;
 function stopGuidedScroll(){
@@ -296,7 +331,7 @@ function glideToNext(){
   return;
  }
  const target=Math.max(0,guidedSections[guidedIndex].getBoundingClientRect().top+window.scrollY-78);
- const from=window.scrollY, distance=target-from, duration=Math.min(4200,Math.max(1700,Math.abs(distance)*1.15));
+ const from=window.scrollY, distance=target-from, duration=Math.min(10500,Math.max(5200,Math.abs(distance)*2.35));
  const started=performance.now();
  function frame(now){
   if(!guidedActive)return;
@@ -304,7 +339,7 @@ function glideToNext(){
   const eased=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
   window.scrollTo(0,from+distance*eased);
   if(t<1)animationFrame=requestAnimationFrame(frame);
-  else{guidedIndex++;pauseTimer=setTimeout(glideToNext,4200)}
+  else{guidedIndex++;pauseTimer=setTimeout(glideToNext,9000)}
  }
  animationFrame=requestAnimationFrame(frame);
 }
