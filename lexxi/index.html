@@ -3,101 +3,224 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#160f22">
-<title>For Lexxi 💜</title>
+<meta name="theme-color" content="#100b1c">
+<title>For Lexxi | A little something</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#160f22;--panel:#241a31;--text:#f6f0fc;--muted:#bcaecb;--lav:#c8a9f4;--accent:#9568c7}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;min-height:100vh;overflow-x:hidden;background:radial-gradient(ellipse at 50% 0%,#342047 0%,var(--bg) 58%);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif}
-.hearts{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-.heart{position:absolute;bottom:-35px;color:#c6a2ed;opacity:0;animation:floatUp linear infinite;filter:drop-shadow(0 0 9px #a879dd55)}
-@keyframes floatUp{0%{transform:translateY(0) rotate(-12deg);opacity:0}12%{opacity:.2}82%{opacity:.16}100%{transform:translateY(-115vh) rotate(18deg);opacity:0}}
-header,main,footer{position:relative;z-index:1}
-header{width:min(1050px,calc(100% - 44px));margin:auto;padding:28px 0;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:21px;letter-spacing:.07em;font-weight:750;color:#e4d2fa}
-.tag,.eyebrow{font-size:10px;letter-spacing:.2em;color:#ad98c2}
-main{width:min(760px,calc(100% - 44px));margin:auto}
-section{min-height:82vh;display:flex;flex-direction:column;justify-content:center;padding:70px 0}
-.eyebrow{color:var(--lav);font-weight:650}
-h1{font-size:clamp(60px,12vw,100px);line-height:.98;letter-spacing:-.065em;margin:22px 0}
-h2{font-size:clamp(36px,7vw,58px);line-height:1.08;letter-spacing:-.05em;margin:18px 0}
-.gradient{background:linear-gradient(110deg,#f5eaff,#bd95eb);-webkit-background-clip:text;background-clip:text;color:transparent}
-p{color:var(--muted);line-height:1.9;font-size:16px;max-width:590px;margin:14px 0}
-.button{display:inline-flex;align-items:center;gap:10px;width:fit-content;margin-top:25px;padding:15px 24px;border-radius:30px;background:var(--accent);color:white;text-decoration:none;border:1px solid #c7a5ef55;font-size:14px;font-weight:650;cursor:pointer;transition:.3s;box-shadow:0 8px 30px #9568c733}
-.button:hover{background:#ad83dc;transform:translateY(-3px)}
-.divider{width:55px;height:1px;background:#a17ac8;margin:25px 0}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:25px}
-.item{padding:22px;background:#241a31cc;border:1px solid #ffffff12;border-radius:15px;color:#e6d8f5;line-height:1.6;backdrop-filter:blur(8px)}
-.item span{display:block;color:#a982d1;font-size:11px;letter-spacing:2px;margin-bottom:12px}
-.question{text-align:center;align-items:center}
-.question p{max-width:480px}
-.buttons{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-.secondary{background:transparent;border:1px solid #9c7cba;box-shadow:none;color:#ddc9f0}
-#response{color:#d7b9f6;margin-top:25px;min-height:30px}
-footer{text-align:center;padding:30px;color:#806e90;font-size:10px;letter-spacing:2px}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
-.reveal.show{opacity:1;transform:translateY(0)}
-@media(max-width:550px){.grid{grid-template-columns:1fr}.tag{font-size:8px;letter-spacing:1px}section{min-height:76vh}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+:root{--ink:#f7f0ff;--muted:#b9accb;--lilac:#d8baff;--violet:#a875e8;--plum:#4a2b68;--line:#ffffff20;--glass:#21162fd9}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:90px}
+body{margin:0;background:#100b1c;color:var(--ink);font-family:'DM Sans',sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;z-index:-3;background:radial-gradient(ellipse at 18% 12%,#40265d 0,transparent 38%),radial-gradient(ellipse at 85% 45%,#2c1b49 0,transparent 42%),linear-gradient(145deg,#100b1c,#171024 60%,#100b1c)}
+body:after{content:"";position:fixed;inset:0;z-index:-2;opacity:.14;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E")}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit}
+#stars,#floaters{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
+.star{position:absolute;width:2px;height:2px;border-radius:50%;background:#ead9ff;box-shadow:0 0 10px 2px #c69bff80;animation:twinkle 3s ease-in-out infinite alternate}
+@keyframes twinkle{to{opacity:.18;transform:scale(.65)}}
+.float-heart{position:absolute;color:#c99cf1;opacity:0;animation:rise linear infinite}
+@keyframes rise{0%{transform:translateY(10vh) rotate(-10deg);opacity:0}15%{opacity:.2}85%{opacity:.12}100%{transform:translateY(-110vh) rotate(22deg);opacity:0}}
+.topbar{position:fixed;z-index:20;top:0;left:0;right:0;height:76px;padding:0 clamp(20px,6vw,88px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #ffffff0c;background:#100b1c99;backdrop-filter:blur(18px)}
+.brand{font-family:'Playfair Display',serif;font-size:24px;letter-spacing:.02em}.brand span{color:var(--lilac)}
+.nav{display:flex;gap:27px;align-items:center}.nav a{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#b9accb;transition:.25s}.nav a:hover,.nav a.active{color:white}
+.nav-ask{padding:10px 17px;border:1px solid #caa5ef66;border-radius:30px;color:#eadbfa!important}
+.progress{position:fixed;top:75px;left:0;height:2px;background:linear-gradient(90deg,#9c66d4,#e1c3ff);width:0;z-index:30;box-shadow:0 0 12px #bd8af8}
+.wrap{width:min(1120px,calc(100% - 48px));margin:auto}
+.hero{min-height:100svh;padding:145px 0 90px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:30px;position:relative}
+.kicker,.section-no{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:#c39ae9;font-weight:700}
+.kicker:before{content:"";display:inline-block;width:28px;height:1px;background:#c39ae9;vertical-align:middle;margin-right:12px}
+h1,h2,h3,p{margin-top:0}h1{font-family:'Playfair Display',serif;font-size:clamp(68px,10vw,126px);line-height:.88;letter-spacing:-.055em;font-weight:500;margin:27px 0}
+h1 em{font-weight:500;color:#d8baff}
+.hero-copy{max-width:490px;color:#c3b6d1;font-size:16px;line-height:1.9}
+.eyebrow{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#9e8cac}
+.actions{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-top:34px}
+.btn{border:1px solid #cda8f0;background:linear-gradient(135deg,#a875e8,#7445a5);border-radius:40px;padding:15px 23px;font-size:12px;letter-spacing:.06em;font-weight:700;cursor:pointer;box-shadow:0 12px 35px #9a60d833;transition:.3s}
+.btn:hover{transform:translateY(-4px);box-shadow:0 17px 40px #9a60d855}
+.btn.ghost{background:#ffffff08;border-color:#ffffff30;box-shadow:none;color:#e5d9f1}
+.text-link{font-size:12px;color:#c7b1db;border-bottom:1px solid #8f6db1;padding-bottom:5px}
+.hero-art{height:min(590px,75vw);min-height:390px;position:relative;display:grid;place-items:center}
+.orbit{position:absolute;width:min(440px,80vw);aspect-ratio:1;border:1px solid #d9baff24;border-radius:50%;box-shadow:0 0 90px #8952ba12,inset 0 0 70px #9a69c510;animation:orbit 34s linear infinite}
+.orbit:before,.orbit:after{content:"";position:absolute;border:1px solid #d9baff20;border-radius:50%;inset:34px;transform:rotateX(65deg) rotate(-25deg)}
+.orbit:after{inset:70px;transform:rotateX(68deg) rotate(38deg)}
+@keyframes orbit{to{transform:rotate(360deg)}}
+.moon{width:245px;aspect-ratio:1;border-radius:50%;position:relative;background:radial-gradient(circle at 32% 27%,#f2ddff 0,#d4aaff 12%,#9563c4 38%,#4c2a70 72%,#21132f 100%);box-shadow:inset -24px -18px 40px #100819aa,0 0 75px #bd8af855,0 0 180px #995bdc30}
+.moon:before{content:"";position:absolute;width:48px;height:48px;border-radius:50%;background:#a16bc0;opacity:.22;top:54px;left:54px;box-shadow:72px 35px 0 -13px #2a153b,35px 115px 0 -8px #2a153b,-28px 55px 0 -15px #2a153b}
+.moon-label{position:absolute;bottom:8%;font-family:'Playfair Display',serif;font-style:italic;color:#d9c4ed;font-size:17px;letter-spacing:.05em}
+.spark{position:absolute;color:#e6cfff;text-shadow:0 0 15px #d1a4ff;font-size:22px}.s1{top:18%;left:18%}.s2{top:29%;right:9%;font-size:14px}.s3{bottom:24%;left:12%;font-size:15px}.s4{bottom:18%;right:19%;font-size:26px}
+.scroll-note{position:absolute;bottom:32px;left:0;color:#887995;font-size:9px;letter-spacing:.25em;text-transform:uppercase;display:flex;align-items:center;gap:12px}.scroll-note:before{content:"";height:1px;width:35px;background:#9b7bb7}
+.section{padding:125px 0;position:relative}.section-head{display:flex;align-items:center;gap:18px;margin-bottom:28px}.section-no{border:1px solid #b58ad544;padding:9px 12px;border-radius:30px}
+h2{font-family:'Playfair Display',serif;font-size:clamp(42px,6vw,72px);font-weight:500;line-height:1.04;letter-spacing:-.035em;margin-bottom:22px}
+.lead{font-size:16px;line-height:1.95;color:#c3b6d1;max-width:660px}
+.panel{border:1px solid #ffffff18;background:linear-gradient(145deg,#ffffff0d,#ffffff04);backdrop-filter:blur(15px);border-radius:24px;box-shadow:0 25px 90px #08040e55}
+.note-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:24px;align-items:stretch;margin-top:48px}
+.note-side{padding:34px;display:flex;flex-direction:column;justify-content:space-between;min-height:310px;background:linear-gradient(145deg,#54376e88,#24172fbb)}
+.note-side .big-quote{font-family:'Playfair Display',serif;font-size:90px;line-height:.6;color:#d5b5f2}
+.note-side p{font-family:'Playfair Display',serif;font-size:25px;line-height:1.35;color:#f1e7fb}
+.note-main{padding:38px}.note-main p{color:#c8bad7;font-size:14px;line-height:2;margin:0 0 17px}
+.signature{font-family:'Playfair Display',serif;font-style:italic;color:#d6b7f2;font-size:21px;margin-top:25px}
+.reason-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin-top:42px}
+.reason{padding:24px 20px;min-height:210px;position:relative;overflow:hidden;transition:.35s}
+.reason:hover{transform:translateY(-7px);border-color:#c59be955}
+.reason:after{content:"";position:absolute;width:120px;height:120px;border-radius:50%;background:#a26bd21b;right:-50px;bottom:-55px;filter:blur(3px)}
+.reason .num{font-size:10px;letter-spacing:.2em;color:#b98de4}.reason h3{font-family:'Playfair Display',serif;font-size:23px;font-weight:500;margin:32px 0 9px}.reason p{font-size:12px;line-height:1.7;color:#a99ab9;margin:0}
+.constellation{margin-top:40px;padding:35px;display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
+.sky{height:320px;position:relative;border-radius:18px;overflow:hidden;background:radial-gradient(ellipse at 50% 50%,#69448a55,transparent 60%),#130d20;border:1px solid #ffffff13}
+.sky:before{content:"";position:absolute;inset:0;background-image:radial-gradient(#fff 1px,transparent 1px);background-size:39px 39px;opacity:.18}
+.const-star{position:absolute;border:0;background:transparent;color:#e8d4ff;font-size:25px;cursor:pointer;filter:drop-shadow(0 0 9px #c69bff);transition:.25s;animation:pulse 2.5s infinite alternate}
+.const-star:hover{transform:scale(1.6);color:white}
+@keyframes pulse{to{filter:drop-shadow(0 0 16px #d9b5ff);opacity:.7}}
+.const-star:nth-child(1){top:20%;left:25%}.const-star:nth-child(2){top:42%;left:58%}.const-star:nth-child(3){top:67%;left:34%}.const-star:nth-child(4){top:25%;left:78%}.const-star:nth-child(5){top:76%;left:76%}
+.const-copy{padding:20px}.const-copy h3{font-family:'Playfair Display',serif;font-size:30px;font-weight:500}.const-copy p{font-size:13px;color:#bcaecb;line-height:1.9}.star-message{margin-top:22px;min-height:75px;padding:17px 19px;border-left:2px solid #bd91e7;background:#ffffff08;color:#e1d2f1;font-family:'Playfair Display',serif;font-size:18px;line-height:1.5}
+.gallery{display:grid;grid-template-columns:1.1fr .9fr 1fr;gap:16px;margin-top:42px}
+.memory{min-height:280px;padding:13px;position:relative;overflow:hidden}
+.memory-art{height:205px;border-radius:14px;position:relative;overflow:hidden;background:linear-gradient(145deg,#52376d,#21152f)}
+.memory:nth-child(2) .memory-art{background:linear-gradient(145deg,#36234e,#8c5a9f)}
+.memory:nth-child(3) .memory-art{background:linear-gradient(145deg,#281a3a,#64477c)}
+.memory-art:before{content:"";position:absolute;width:170px;height:170px;border:1px solid #f0dcff44;border-radius:50%;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 22px #ffffff08,0 0 0 50px #ffffff05}
+.memory-art:after{content:"✦";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:42px;color:#f1ddff;text-shadow:0 0 30px #e1baff}
+.memory-label{padding:17px 7px 6px}.memory-label span{font-size:9px;letter-spacing:.18em;color:#b58bda;text-transform:uppercase}.memory-label h3{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;margin:7px 0 0}
+.gallery-note{font-size:11px;color:#9584a5;margin-top:15px}
+.letter-wrap{max-width:800px;margin:44px auto 0;padding:18px;position:relative}
+.envelope{min-height:340px;display:grid;place-items:center;text-align:center;padding:45px 24px;position:relative;overflow:hidden;background:linear-gradient(145deg,#49305f,#21142f 70%);border:1px solid #d4b1f044}
+.envelope:before,.envelope:after{content:"";position:absolute;width:270px;height:270px;border:1px solid #d7b8f326;border-radius:50%}
+.envelope:before{top:-190px;left:-100px}.envelope:after{bottom:-205px;right:-80px}
+.seal{width:65px;height:65px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#d8b6f6,#8b5db8);color:#311b45;font-size:25px;box-shadow:0 0 35px #d1a7f744;margin:0 auto 20px}
+.envelope h3{font-family:'Playfair Display',serif;font-size:34px;font-weight:500;margin:0 0 12px}.envelope p{font-size:13px;color:#c6b5d5;line-height:1.8}
+.letter-content{display:none;padding:38px 42px;margin-top:18px;line-height:2;color:#cbbdd9;font-size:14px}.letter-content.open{display:block;animation:appear .7s ease}.letter-content p{margin:0 0 17px}
+@keyframes appear{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+.final-section{text-align:center;padding:145px 0 120px}.final-section h2{max-width:820px;margin:25px auto}.final-section .lead{margin:0 auto}.final-card{margin:45px auto 0;max-width:720px;padding:55px 25px;background:radial-gradient(ellipse at 50% 0%,#754b9a55,transparent 65%),#21162f;border:1px solid #d2a9f044;border-radius:28px;box-shadow:0 25px 100px #08040e88}
+.final-card .heart-icon{font-size:36px;color:#dfc0ff;text-shadow:0 0 30px #c08af7}
+.final-card h3{font-family:'Playfair Display',serif;font-size:clamp(30px,5vw,48px);font-weight:500;margin:20px 0}
+.final-card p{font-size:13px;color:#bcaecb;line-height:1.8;max-width:460px;margin:0 auto}
+.final-buttons{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:28px}
+#answer{min-height:30px;color:#e2c9ff;font-family:'Playfair Display',serif;font-size:19px;margin-top:25px}
+footer{padding:30px 20px 45px;text-align:center;color:#74647f;font-size:9px;letter-spacing:.25em}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .85s ease,transform .85s ease}.reveal.visible{opacity:1;transform:translateY(0)}
+@media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:140px}.hero-art{height:390px;min-height:0;grid-row:1}.hero-copy-wrap{grid-row:2}.scroll-note{display:none}.reason-grid{grid-template-columns:repeat(2,1fr)}.note-layout{grid-template-columns:1fr}.constellation{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}.gallery .memory:last-child{grid-column:1/-1}.nav{gap:13px}.nav a{font-size:9px}.nav a:nth-child(2),.nav a:nth-child(3){display:none}}
+@media(max-width:520px){.wrap{width:calc(100% - 34px)}.topbar{height:65px;padding:0 18px}.progress{top:64px}.brand{font-size:21px}.nav-ask{padding:9px 12px}.hero{padding-top:100px;gap:0}.hero-art{height:330px}.moon{width:190px}.section{padding:85px 0}.reason-grid{gap:9px}.reason{padding:19px 15px;min-height:190px}.reason h3{font-size:20px;margin-top:25px}.note-main{padding:25px}.note-side{min-height:240px;padding:25px}.constellation{padding:15px}.sky{height:260px}.gallery{grid-template-columns:1fr}.gallery .memory:last-child{grid-column:auto}.memory{min-height:250px}.memory-art{height:185px}.letter-content{padding:26px 23px}.final-card{padding:42px 20px}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 </style>
 </head>
 <body>
-<div class="hearts" id="hearts" aria-hidden="true"></div>
-<header><div class="logo">lexxi.</div><div class="tag">A LITTLE SOMETHING FOR YOU</div></header>
+<div id="stars"></div><div id="floaters"></div>
+<div class="progress" id="progress"></div>
+<header class="topbar">
+<a class="brand" href="#home">for <span>lexxi.</span></a>
+<nav class="nav" aria-label="Main navigation"><a href="#note">the note</a><a href="#little-things">little things</a><a href="#constellation">our sky</a><a href="#question" class="nav-ask">the question ↗</a></nav>
+</header>
 <main>
-<section class="reveal">
-<div class="eyebrow">01 / START HERE</div>
-<h1>Hey,<br><span class="gradient">Lexxi.</span></h1>
-<p>I've been wanting to ask you something, and I figured this would be a little more memorable than just sending a text.</p>
-<a href="#message" class="button">Continue <span>↗</span></a>
+<section class="hero wrap" id="home">
+<div class="hero-copy-wrap">
+<div class="kicker">A small corner of the universe, for you</div>
+<h1>Hey,<br><em>Lexxi.</em></h1>
+<p class="hero-copy">I wanted to do this a little differently. So, I made you a place to pause for a minute, read what's on my mind, and hopefully smile somewhere along the way.</p>
+<div class="actions"><a class="btn" href="#note">Step inside <span>↗</span></a><a class="text-link" href="#little-things">There's more below</a></div>
+</div>
+<div class="hero-art" aria-label="Decorative purple moon and stars">
+<div class="orbit"></div><div class="moon"></div><div class="spark s1">✧</div><div class="spark s2">✦</div><div class="spark s3">✧</div><div class="spark s4">✦</div><div class="moon-label">somewhere between a thought and a feeling</div>
+</div>
+<div class="scroll-note">SCROLL A LITTLE, THERE'S A NOTE FOR YOU</div>
 </section>
-<section id="message" class="reveal">
-<div class="eyebrow">02 / A NOTE FOR YOU</div>
-<h2>There's something I want you to know.</h2>
-<div class="divider"></div>
+
+<section class="section wrap reveal" id="note">
+<div class="section-head"><span class="section-no">01</span><span class="eyebrow">A note before anything else</span></div>
+<h2>I'd rather be<br><em style="color:#d4b2f2">honest with you.</em></h2>
+<p class="lead">There's a part of this that feels exciting, and another part that deserves a little care. I don't want to pretend the second part isn't there.</p>
+<div class="note-layout">
+<div class="note-side panel"><div class="big-quote">“</div><p>I'd like this to be something we choose, not something we fall into.</p><div class="eyebrow">A THOUGHT I'VE BEEN HOLDING</div></div>
+<div class="note-main panel">
 <p>I've genuinely enjoyed getting to know you. I like our conversations, the little things about you, and the way spending time with you has become something I look forward to.</p>
 <p>I'd be lying if I said I had no uncertainties, though. Sometimes I wonder whether I'm someone you're truly ready to move towards, or whether the timing is still a little complicated. I know there may be feelings or a connection from before that haven't completely faded, and I don't want to overlook that just because I like you.</p>
-<p>I'm not saying any of this to make you feel pressured or to ask you to have everything figured out right now. I just don't want to mistake being close to someone for being in the same place emotionally. I want whatever happens between us to be genuine, not something either of us settles into because it's convenient or because we're trying to fill a space someone else left.</p>
+<p>I'm not saying this to make you feel pressured, or to ask you to have everything figured out right now. I just don't want to mistake being close to someone for being in the same place emotionally. I want whatever happens between us to be genuine, not something either of us settles into because it's convenient or because we're trying to fill a space someone else left.</p>
 <p>Even with that uncertainty, I still want to get to know you and see what this could become. I don't expect guarantees. I just hope that if we take that step, we're both choosing it for the right reasons.</p>
-<a href="#reasons" class="button">Keep going <span>→</span></a>
-</section>
-<section id="reasons" class="reveal">
-<div class="eyebrow">03 / THE LITTLE THINGS</div>
-<h2>Things I appreciate about you.</h2>
-<p>A few things that stand out to me.</p>
-<div class="grid">
-<div class="item"><span>01</span>Your personality</div>
-<div class="item"><span>02</span>The way you make me feel comfortable</div>
-<div class="item"><span>03</span>Your willingness to improve</div>
-<div class="item"><span>04</span>The little things that make you, you</div>
+<div class="signature">With sincerity, always. 💜</div>
 </div>
-<a href="#question" class="button">One more thing <span>→</span></a>
-</section>
-<section id="question" class="question reveal">
-<div class="eyebrow">04 / THE QUESTION</div>
-<h2 class="gradient">Lexxi, will you be my girlfriend?</h2>
-<p>No pressure to have the perfect answer. I just wanted to ask you properly.</p>
-<div class="buttons">
-<button class="button" id="yes">Yes 💜</button>
-<button class="button secondary" id="think">Let me think about it</button>
 </div>
-<div id="response" aria-live="polite"></div>
+</section>
+
+<section class="section wrap reveal" id="little-things">
+<div class="section-head"><span class="section-no">02</span><span class="eyebrow">The details don't go unnoticed</span></div>
+<h2>Little things.<br><em style="color:#d4b2f2">Big reasons.</em></h2>
+<p class="lead">It's not one grand thing. It's the collection of small things that make getting to know you feel worth it.</p>
+<div class="reason-grid">
+<article class="reason panel"><div class="num">01 / YOU</div><h3>Your personality</h3><p>The way you are, your humour, and the little details that make you distinctly you.</p></article>
+<article class="reason panel"><div class="num">02 / COMFORT</div><h3>How easy it feels</h3><p>I appreciate being able to talk to you and feel comfortable in the moment.</p></article>
+<article class="reason panel"><div class="num">03 / GROWTH</div><h3>Your willingness</h3><p>I respect that you can recognise things, learn, and make an effort to improve.</p></article>
+<article class="reason panel"><div class="num">04 / THE SMALL STUFF</div><h3>The in-between</h3><p>Even ordinary conversations can become the parts of a day I remember.</p></article>
+</div>
+</section>
+
+<section class="section wrap reveal" id="constellation">
+<div class="section-head"><span class="section-no">03</span><span class="eyebrow">A little interactive pause</span></div>
+<h2>Find a star.<br><em style="color:#d4b2f2">I'll tell you why.</em></h2>
+<p class="lead">There are a few thoughts scattered up here. Tap the stars and see what each one says.</p>
+<div class="constellation panel">
+<div class="sky" id="sky">
+<button class="const-star" data-message="I like that getting to know you doesn't feel like a task. It feels natural.">✦</button>
+<button class="const-star" data-message="I notice the effort you make, even in the little ways.">✦</button>
+<button class="const-star" data-message="I like that there's still so much about you left for me to discover.">✦</button>
+<button class="const-star" data-message="I want to know you beyond the easy days, too.">✦</button>
+<button class="const-star" data-message="I hope we can keep being honest with each other, even when a conversation is difficult.">✦</button>
+</div>
+<div class="const-copy"><div class="eyebrow">A MESSAGE FROM THE STARS</div><h3>Pick one.</h3><p>Each little light has something I wanted you to know. No rush, just explore.</p><div class="star-message" id="starMessage" aria-live="polite">Choose any star on the left. I'll leave the first thought here for you.</div></div>
+</div>
+</section>
+
+<section class="section wrap reveal" id="memories">
+<div class="section-head"><span class="section-no">04</span><span class="eyebrow">A space for moments</span></div>
+<h2>Not a scrapbook.<br><em style="color:#d4b2f2">A beginning.</em></h2>
+<p class="lead">The best memories are the ones we actually get to make. These little frames are waiting for moments that belong to us.</p>
+<div class="gallery">
+<div class="memory panel"><div class="memory-art"></div><div class="memory-label"><span>FRAME 01</span><h3>A moment worth keeping</h3></div></div>
+<div class="memory panel"><div class="memory-art"></div><div class="memory-label"><span>FRAME 02</span><h3>An ordinary day, made better</h3></div></div>
+<div class="memory panel"><div class="memory-art"></div><div class="memory-label"><span>FRAME 03</span><h3>Something still unwritten</h3></div></div>
+</div>
+<p class="gallery-note">A few empty frames for now. No need to rush the story.</p>
+</section>
+
+<section class="section wrap reveal" id="letter">
+<div class="section-head"><span class="section-no">05</span><span class="eyebrow">One last thing to read</span></div>
+<div class="letter-wrap panel">
+<div class="envelope">
+<div><div class="seal">♡</div><div class="eyebrow">SEALED FOR LEXXI</div><h3>A little more from me.</h3><p>Some things feel better when they're opened in their own time.</p><button class="btn" id="openLetter">Open the letter ✧</button></div>
+</div>
+<div class="letter-content panel" id="letterContent">
+<p>I don't know exactly where this goes, and I think that's part of why I wanted to be thoughtful about asking. I like you, and I see something worth exploring, but I also want to be sure we're meeting each other in the present, not standing in the shadow of something unfinished.</p>
+<p>You don't have to give me an answer that makes me happy just because I've put effort into this. I'd rather have an honest answer than a rushed one. If we decide to try, I want it to be because we both genuinely want to see where this can go.</p>
+<p>Whatever your answer is, I hope you know that I meant every word here.</p>
+<div class="signature">💜</div>
+</div>
+</div>
+</section>
+
+<section class="final-section wrap reveal" id="question">
+<div class="eyebrow">06 / SO, HERE IT IS</div>
+<h2>There's one question<br><em style="color:#d4b2f2">I've been wanting to ask.</em></h2>
+<p class="lead">No grand expectations. Just me being clear about what I'd like.</p>
+<div class="final-card">
+<div class="heart-icon">♡</div>
+<div class="eyebrow">LEXxi, WOULD YOU...</div>
+<h3>Be my girlfriend?</h3>
+<p>I'd like the chance to build something genuine with you, at a pace that feels right for both of us.</p>
+<div class="final-buttons"><button class="btn" id="yes">Yes, I'd like that 💜</button><button class="btn ghost" id="time">I need a little time</button></div>
+<div id="answer" aria-live="polite"></div>
+</div>
 </section>
 </main>
-<footer>MADE WITH INTENTION · FOR LEXXI 💜</footer>
+<footer>MADE WITH THOUGHT · FOR LEXXI · 💜</footer>
 <script>
-const layer=document.getElementById('hearts');
-for(let i=0;i<13;i++){
- const h=document.createElement('span');h.className='heart';h.textContent=i%2?'♡':'♥';
- h.style.left=Math.random()*100+'%';h.style.fontSize=(12+Math.random()*13)+'px';
- h.style.animationDuration=(18+Math.random()*17)+'s';h.style.animationDelay=(-Math.random()*30)+'s';layer.appendChild(h);
-}
-const observer=new IntersectionObserver(entries=>entries.forEach(e=>{
- if(e.isIntersecting){e.target.classList.add('show');observer.unobserve(e.target)}
-}),{threshold:.12});
+const stars=document.getElementById('stars');
+for(let i=0;i<95;i++){const s=document.createElement('i');s.className='star';s.style.left=Math.random()*100+'%';s.style.top=Math.random()*100+'%';s.style.animationDelay=Math.random()*4+'s';s.style.opacity=.25+Math.random()*.7;stars.appendChild(s)}
+const floaters=document.getElementById('floaters');
+for(let i=0;i<12;i++){const h=document.createElement('span');h.className='float-heart';h.textContent=i%2?'♡':'✧';h.style.left=Math.random()*100+'%';h.style.fontSize=(13+Math.random()*16)+'px';h.style.animationDuration=(22+Math.random()*20)+'s';h.style.animationDelay=(-Math.random()*35)+'s';floaters.appendChild(h)}
+const progress=document.getElementById('progress');
+window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?scrollY/max*100:0)+'%'},{passive:true});
+const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-document.getElementById('yes').onclick=()=>document.getElementById('response').textContent="You just made me really happy. Here's to us. 💜";
-document.getElementById('think').onclick=()=>document.getElementById('response').textContent="Take your time. I want you to be comfortable with your answer. 💜";
+document.querySelectorAll('.const-star').forEach(star=>star.addEventListener('click',()=>{document.getElementById('starMessage').textContent=star.dataset.message;document.querySelectorAll('.const-star').forEach(s=>s.style.color='');star.style.color='#fff'}));
+document.getElementById('openLetter').addEventListener('click',()=>{const letter=document.getElementById('letterContent');letter.classList.toggle('open');document.getElementById('openLetter').textContent=letter.classList.contains('open')?'Close the letter ↑':'Open the letter ✧';if(letter.classList.contains('open'))letter.scrollIntoView({behavior:'smooth',block:'center'})});
+document.getElementById('yes').addEventListener('click',()=>{document.getElementById('answer').textContent='You just made me really happy. Let’s take it one genuine step at a time. 💜'});
+document.getElementById('time').addEventListener('click',()=>{document.getElementById('answer').textContent='Take the time you need. I want your answer to feel right for you. 💜'});
 </script>
 </body>
 </html>
