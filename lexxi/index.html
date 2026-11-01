@@ -99,6 +99,21 @@ footer{padding:30px 20px 45px;text-align:center;color:#74647f;font-size:9px;lett
 @media(max-width:800px){.hero{grid-template-columns:1fr;padding-top:140px}.hero-art{height:390px;min-height:0;grid-row:1}.hero-copy-wrap{grid-row:2}.scroll-note{display:none}.reason-grid{grid-template-columns:repeat(2,1fr)}.note-layout{grid-template-columns:1fr}.constellation{grid-template-columns:1fr}.gallery{grid-template-columns:1fr 1fr}.gallery .memory:last-child{grid-column:1/-1}.nav{gap:13px}.nav a{font-size:9px}.nav a:nth-child(2),.nav a:nth-child(3){display:none}}
 @media(max-width:520px){.wrap{width:calc(100% - 34px)}.topbar{height:65px;padding:0 18px}.progress{top:64px}.brand{font-size:21px}.nav-ask{padding:9px 12px}.hero{padding-top:100px;gap:0}.hero-art{height:330px}.moon{width:190px}.section{padding:85px 0}.reason-grid{gap:9px}.reason{padding:19px 15px;min-height:190px}.reason h3{font-size:20px;margin-top:25px}.note-main{padding:25px}.note-side{min-height:240px;padding:25px}.constellation{padding:15px}.sky{height:260px}.gallery{grid-template-columns:1fr}.gallery .memory:last-child{grid-column:auto}.memory{min-height:250px}.memory-art{height:185px}.letter-content{padding:26px 23px}.final-card{padding:42px 20px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
+/* Gentle automation: the page guides the experience without taking control away. */
+.hero-copy-wrap .kicker{animation:softIn .9s both}
+.hero-copy-wrap h1{animation:softIn 1.15s .18s both}
+.hero-copy-wrap .hero-copy{animation:softIn 1.1s .42s both}
+.hero-copy-wrap .actions{animation:softIn 1.1s .65s both}
+@keyframes softIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.const-star.selected{color:#fff;transform:scale(1.35)}
+.letter-content p{opacity:0;transform:translateY(10px);transition:opacity .65s ease,transform .65s ease}
+.letter-content.open p{opacity:1;transform:translateY(0)}
+.letter-content.open p:nth-child(2){transition-delay:.18s}
+.letter-content.open p:nth-child(3){transition-delay:.36s}
+.envelope{transition:opacity .5s ease,transform .5s ease}
+.envelope.opened{opacity:.55;transform:scale(.985)}
+
 </style>
 </head>
 <body>
@@ -217,8 +232,28 @@ const progress=document.getElementById('progress');
 window.addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;progress.style.width=(max>0?scrollY/max*100:0)+'%'},{passive:true});
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
-document.querySelectorAll('.const-star').forEach(star=>star.addEventListener('click',()=>{document.getElementById('starMessage').textContent=star.dataset.message;document.querySelectorAll('.const-star').forEach(s=>s.style.color='');star.style.color='#fff'}));
-document.getElementById('openLetter').addEventListener('click',()=>{const letter=document.getElementById('letterContent');letter.classList.toggle('open');document.getElementById('openLetter').textContent=letter.classList.contains('open')?'Close the letter ↑':'Open the letter ✧';if(letter.classList.contains('open'))letter.scrollIntoView({behavior:'smooth',block:'center'})});
+const constellationStars=[...document.querySelectorAll('.const-star')];
+let chosenStar=-1, autoStarTimer;
+function showStar(index,manual=false){
+ const star=constellationStars[index];
+ document.getElementById('starMessage').textContent=star.dataset.message;
+ constellationStars.forEach(s=>s.classList.remove('selected'));
+ star.classList.add('selected');chosenStar=index;
+ if(manual){clearInterval(autoStarTimer);document.getElementById('starMessage').dataset.paused='true'}
+}
+const startStarCycle=()=>{if(document.getElementById('starMessage').dataset.paused==='true')return;let i=0;showStar(i);autoStarTimer=setInterval(()=>{if(document.getElementById('starMessage').dataset.paused==='true'){clearInterval(autoStarTimer);return}i=(i+1)%constellationStars.length;showStar(i)},4600)};
+const skyObserver=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){startStarCycle();skyObserver.disconnect()}},{threshold:.35});
+skyObserver.observe(document.getElementById('sky'));
+const letter=document.getElementById('letterContent'), envelope=document.querySelector('.envelope'), openButton=document.getElementById('openLetter');
+function revealLetter(auto=false){
+ if(letter.classList.contains('open'))return;
+ letter.classList.add('open');envelope.classList.add('opened');
+ openButton.textContent=auto?'The letter is open ♡':'Close the letter ↑';
+ if(auto)openButton.setAttribute('aria-label','The letter has opened automatically');
+}
+openButton.addEventListener('click',()=>{if(letter.classList.contains('open')){letter.classList.remove('open');envelope.classList.remove('opened');openButton.textContent='Open the letter ✧'}else{revealLetter(false);letter.scrollIntoView({behavior:'smooth',block:'center'})}});
+const letterObserver=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){setTimeout(()=>revealLetter(true),900);letterObserver.disconnect()}},{threshold:.45});
+letterObserver.observe(document.getElementById('letter'));
 document.getElementById('yes').addEventListener('click',()=>{document.getElementById('answer').textContent='You just made me really happy. Let’s take it one genuine step at a time. 💜'});
 document.getElementById('time').addEventListener('click',()=>{document.getElementById('answer').textContent='Take the time you need. I want your answer to feel right for you. 💜'});
 </script>
