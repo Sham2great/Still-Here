@@ -144,11 +144,28 @@ footer{padding:30px 20px 45px;text-align:center;color:#74647f;font-size:9px;lett
 @keyframes questionHalo{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.final-section.question-arrived *{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}}
 
+
+/* Chapter-by-chapter presentation mode */
+html,body{height:100%;overflow:hidden}
+main{height:100svh;padding-top:76px}
+main>section{display:none!important;height:calc(100svh - 76px);min-height:0;overflow-y:auto;overscroll-behavior:contain;padding-top:55px;padding-bottom:112px;scrollbar-width:thin;scrollbar-color:#76558e transparent}
+main>section.slide-active{display:block!important;animation:slideIn .72s cubic-bezier(.2,.75,.25,1) both}
+main>section.hero.slide-active{display:grid!important}
+@keyframes slideIn{from{opacity:0;transform:translateY(22px) scale(.99);filter:blur(5px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+.slide-controls{position:fixed;z-index:45;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:9px 11px 9px 17px;border:1px solid #ffffff20;border-radius:40px;background:#1b1229ed;backdrop-filter:blur(18px);box-shadow:0 12px 40px #08040e88}
+.slide-counter{font-size:10px;letter-spacing:.14em;color:#bba5d1;min-width:52px}
+.slide-nav{border:1px solid #ffffff26;border-radius:30px;padding:11px 16px;background:#ffffff08;color:#e9ddf4;font-size:11px;cursor:pointer;transition:.25s}
+.slide-nav:hover:not(:disabled){border-color:#d4b1f0;background:#ffffff13;transform:translateY(-2px)}
+.slide-nav:disabled{opacity:.3;cursor:default}
+.slide-nav.next{background:linear-gradient(135deg,#a875e8,#7445a5);border-color:#cda8f0;color:white;font-weight:700}
+.slide-nav span{margin-left:5px}
+@media(max-width:800px){main{padding-top:65px}main>section{height:calc(100svh - 65px);padding-top:35px;padding-bottom:105px}}
+@media(prefers-reduced-motion:reduce){main>section.slide-active{animation:none}}
 </style>
 </head>
 <body>
 <div id="stars"></div><div id="floaters"></div>
-<div class="progress" id="progress"></div>\n<button class="auto-scroll-control" id="autoScrollControl" type="button">Ⅱ Pause auto-scroll</button>
+<div class="progress" id="progress"></div>\n<div class="slide-controls" aria-label="Slideshow controls"><span class="slide-counter" id="slideCounter">01 / 07</span><button class="slide-nav" id="prevSlide" type="button" disabled>← Back</button><button class="slide-nav next" id="nextSlide" type="button">Continue <span>→</span></button></div>
 <header class="topbar">
 <a class="brand" href="#home">for <span>lexxi.</span></a>
 <nav class="nav" aria-label="Main navigation"><a href="#note">the note</a><a href="#little-things">little things</a><a href="#constellation">our sky</a><a href="#question" class="nav-ask">one last thing ↗</a></nav>
@@ -304,67 +321,40 @@ document.querySelectorAll('.const-star').forEach((star,index)=>star.addEventList
 document.getElementById('yes').addEventListener('click',()=>{document.getElementById('answer').textContent='You just made me really happy. Let’s take it one genuine step at a time. 💜'});
 document.getElementById('time').addEventListener('click',()=>{document.getElementById('answer').textContent='Take the time you need. I want your answer to feel right for you. 💜'});
 
-// Guided auto-scroll: glide to each chapter, pause to read, then continue.
-const guidedSections=[...document.querySelectorAll('main > section')];
-const questionReveal=new IntersectionObserver(entries=>{
- if(entries.some(entry=>entry.isIntersecting)){
-  document.getElementById('question').classList.add('question-arrived');
-  questionReveal.disconnect();
- }
-},{threshold:.22});
-questionReveal.observe(document.getElementById('question'));
-
-const autoControl=document.getElementById('autoScrollControl');
-let guidedActive=false, guidedIndex=1, animationFrame=null, pauseTimer=null, startTimer=null;
-function stopGuidedScroll(){
- guidedActive=false;
- cancelAnimationFrame(animationFrame);
- clearTimeout(pauseTimer);
- autoControl.textContent='↻ Resume auto-scroll';
+// Slideshow navigation: one chapter at a time, with the reader in control.
+const slides=[...document.querySelectorAll('main > section')];
+let currentSlide=0;
+const slideProgress=document.getElementById('progress');
+const slideCounter=document.getElementById('slideCounter');
+const prevSlide=document.getElementById('prevSlide');
+const nextSlide=document.getElementById('nextSlide');
+function showSlide(index){
+ currentSlide=Math.max(0,Math.min(index,slides.length-1));
+ slides.forEach((slide,i)=>{
+  slide.classList.toggle('slide-active',i===currentSlide);
+  slide.classList.toggle('visible',i===currentSlide);
+  if(i===currentSlide)slide.scrollTop=0;
+ });
+ slideProgress.style.width=((currentSlide+1)/slides.length*100)+'%';
+ slideCounter.textContent=String(currentSlide+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+ prevSlide.disabled=currentSlide===0;
+ nextSlide.innerHTML=currentSlide===slides.length-1?'Start again <span>↻</span>':'Continue <span>→</span>';
+ if(slides[currentSlide].id==='question')slides[currentSlide].classList.add('question-arrived');
+ if(slides[currentSlide].id==='constellation')startStarCycle();
+ if(slides[currentSlide].id==='letter')setTimeout(revealLetter,650);
 }
-function glideToNext(){
- if(!guidedActive)return;
- if(guidedIndex>=guidedSections.length){
-  stopGuidedScroll();
-  autoControl.textContent='↻ Replay guided tour';
-  guidedIndex=1;
-  return;
- }
- const target=Math.max(0,guidedSections[guidedIndex].getBoundingClientRect().top+window.scrollY-78);
- const from=window.scrollY, distance=target-from, duration=Math.min(10500,Math.max(5200,Math.abs(distance)*2.35));
- const started=performance.now();
- function frame(now){
-  if(!guidedActive)return;
-  const t=Math.min(1,(now-started)/duration);
-  const eased=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-  window.scrollTo(0,from+distance*eased);
-  if(t<1)animationFrame=requestAnimationFrame(frame);
-  else{guidedIndex++;pauseTimer=setTimeout(glideToNext,9000)}
- }
- animationFrame=requestAnimationFrame(frame);
-}
-function startGuidedScroll(){
- if(guidedActive)return;
- if(guidedIndex>=guidedSections.length)guidedIndex=1;
- guidedActive=true;
- autoControl.classList.add('show');
- autoControl.textContent='Ⅱ Pause auto-scroll';
- glideToNext();
-}
-autoControl.addEventListener('click',()=>{
- if(guidedActive)stopGuidedScroll();
- else startGuidedScroll();
+prevSlide.addEventListener('click',()=>showSlide(currentSlide-1));
+nextSlide.addEventListener('click',()=>showSlide(currentSlide===slides.length-1?0:currentSlide+1));
+document.querySelectorAll('.nav a, .hero a[href^="#"]').forEach(link=>link.addEventListener('click',event=>{
+ const targetId=link.getAttribute('href').slice(1);
+ const index=slides.findIndex(slide=>slide.id===targetId);
+ if(index>=0){event.preventDefault();showSlide(index)}
+}));
+window.addEventListener('keydown',event=>{
+ if(['ArrowRight','PageDown'].includes(event.key)){event.preventDefault();showSlide(currentSlide+1)}
+ if(['ArrowLeft','PageUp'].includes(event.key)){event.preventDefault();showSlide(currentSlide-1)}
 });
-['wheel','touchstart','keydown'].forEach(type=>{
- window.addEventListener(type,event=>{
-  if(!guidedActive)return;
-  if(type==='keydown'&&!['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(event.key))return;
-  stopGuidedScroll();
- },{passive:true});
-});
-window.addEventListener('load',()=>{
- startTimer=setTimeout(startGuidedScroll,1800);
-});
+showSlide(0);
 </script>
 </body>
 </html>
