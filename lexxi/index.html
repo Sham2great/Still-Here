@@ -132,14 +132,14 @@ footer{padding:30px 20px 45px;text-align:center;color:#74647f;font-size:9px;lett
 .final-section .heart-icon{display:inline-block}
 .final-section.question-arrived .heart-icon{animation:questionHeartbeat 1.5s 3.4s ease-in-out 3}
 .final-section .final-card h3{opacity:0;transform:scale(.88)}
-.final-section.question-arrived .final-card h3{animation:questionWords 1.15s 3.05s cubic-bezier(.16,1,.3,1) forwards}
+.final-section.question-arrived .final-card h3{animation:questionWords 2.25s 3.05s cubic-bezier(.16,1,.3,1) forwards;text-shadow:0 0 34px #d8baff55}
 .final-section .final-buttons{opacity:0;transform:translateY(12px)}
 .final-section.question-arrived .final-buttons{animation:questionRise .9s 3.85s ease forwards}
 @keyframes questionSpotlight{0%{opacity:0;transform:scale(.45)}45%{opacity:1}100%{opacity:.8;transform:scale(1.15)}}
 @keyframes questionRise{to{opacity:1;transform:translateY(0)}}
 @keyframes questionTitle{0%{opacity:0;transform:translateY(55px);letter-spacing:.08em;filter:blur(9px)}65%{opacity:1;filter:blur(0)}100%{opacity:1;transform:translateY(0);letter-spacing:-.035em;filter:blur(0)}}
 @keyframes questionCard{0%{opacity:0;transform:translateY(55px) scale(.91);filter:blur(8px)}65%{opacity:1;filter:blur(0)}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
-@keyframes questionWords{to{opacity:1;transform:scale(1)}}
+@keyframes questionWords{0%{opacity:0;transform:translateY(38px) scale(.72);filter:blur(13px);letter-spacing:.12em;text-shadow:0 0 0 transparent}58%{opacity:1;filter:blur(0);transform:translateY(-5px) scale(1.045);letter-spacing:-.01em;text-shadow:0 0 42px #d8baff99}78%{transform:translateY(2px) scale(.985)}100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0);letter-spacing:normal;text-shadow:0 0 28px #d8baff55}}
 @keyframes questionHeartbeat{0%,100%{transform:scale(1)}18%{transform:scale(1.3)}36%{transform:scale(1)}54%{transform:scale(1.18)}72%{transform:scale(1)}}
 @keyframes questionHalo{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.final-section.question-arrived *{animation:none!important;opacity:1!important;transform:none!important;filter:none!important}}
