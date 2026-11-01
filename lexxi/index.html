@@ -233,27 +233,44 @@ window.addEventListener('scroll',()=>{const max=document.documentElement.scrollH
 const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}}),{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 const constellationStars=[...document.querySelectorAll('.const-star')];
-let chosenStar=-1, autoStarTimer;
-function showStar(index,manual=false){
+let autoStarTimer, starIndex=0;
+function showStar(index){
  const star=constellationStars[index];
  document.getElementById('starMessage').textContent=star.dataset.message;
  constellationStars.forEach(s=>s.classList.remove('selected'));
- star.classList.add('selected');chosenStar=index;
- if(manual){clearInterval(autoStarTimer);document.getElementById('starMessage').dataset.paused='true'}
+ star.classList.add('selected');
 }
-const startStarCycle=()=>{if(document.getElementById('starMessage').dataset.paused==='true')return;let i=0;showStar(i);autoStarTimer=setInterval(()=>{if(document.getElementById('starMessage').dataset.paused==='true'){clearInterval(autoStarTimer);return}i=(i+1)%constellationStars.length;showStar(i)},4600)};
-const skyObserver=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){startStarCycle();skyObserver.disconnect()}},{threshold:.35});
-skyObserver.observe(document.getElementById('sky'));
-const letter=document.getElementById('letterContent'), envelope=document.querySelector('.envelope'), openButton=document.getElementById('openLetter');
-function revealLetter(auto=false){
+function startStarCycle(){
+ if(autoStarTimer)return;
+ showStar(starIndex);
+ autoStarTimer=setInterval(()=>{starIndex=(starIndex+1)%constellationStars.length;showStar(starIndex)},3200);
+}
+const sky=document.getElementById('sky');
+const skyObserver=new IntersectionObserver(entries=>{
+ if(entries.some(e=>e.isIntersecting)){startStarCycle();skyObserver.disconnect()}
+},{threshold:.2});
+skyObserver.observe(sky);
+const letter=document.getElementById('letterContent');
+const envelope=document.querySelector('.envelope');
+const openButton=document.getElementById('openLetter');
+function revealLetter(){
  if(letter.classList.contains('open'))return;
- letter.classList.add('open');envelope.classList.add('opened');
- openButton.textContent=auto?'The letter is open ♡':'Close the letter ↑';
- if(auto)openButton.setAttribute('aria-label','The letter has opened automatically');
+ letter.classList.add('open');
+ envelope.classList.add('opened');
+ openButton.textContent='Your letter is open ♡';
 }
-openButton.addEventListener('click',()=>{if(letter.classList.contains('open')){letter.classList.remove('open');envelope.classList.remove('opened');openButton.textContent='Open the letter ✧'}else{revealLetter(false);letter.scrollIntoView({behavior:'smooth',block:'center'})}});
-const letterObserver=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){setTimeout(()=>revealLetter(true),900);letterObserver.disconnect()}},{threshold:.45});
+const letterObserver=new IntersectionObserver(entries=>{
+ if(entries.some(e=>e.isIntersecting)){setTimeout(revealLetter,500);letterObserver.disconnect()}
+},{threshold:.3});
 letterObserver.observe(document.getElementById('letter'));
+openButton.addEventListener('click',()=>{
+ if(letter.classList.contains('open')){
+  letter.classList.remove('open');envelope.classList.remove('opened');openButton.textContent='Open the letter ✧';
+ }else{revealLetter()}
+});
+document.querySelectorAll('.const-star').forEach((star,index)=>star.addEventListener('click',()=>{
+ starIndex=index;showStar(index);
+}));
 document.getElementById('yes').addEventListener('click',()=>{document.getElementById('answer').textContent='You just made me really happy. Let’s take it one genuine step at a time. 💜'});
 document.getElementById('time').addEventListener('click',()=>{document.getElementById('answer').textContent='Take the time you need. I want your answer to feel right for you. 💜'});
 </script>
