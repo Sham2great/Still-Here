@@ -277,40 +277,59 @@ document.querySelectorAll('.const-star').forEach((star,index)=>star.addEventList
 document.getElementById('yes').addEventListener('click',()=>{document.getElementById('answer').textContent='You just made me really happy. Let’s take it one genuine step at a time. 💜'});
 document.getElementById('time').addEventListener('click',()=>{document.getElementById('answer').textContent='Take the time you need. I want your answer to feel right for you. 💜'});
 
-// A gentle guided scroll lets the page unfold on its own; any manual input pauses it.
+// Guided auto-scroll: glide to each chapter, pause to read, then continue.
 const guidedSections=[...document.querySelectorAll('main > section')];
 const autoControl=document.getElementById('autoScrollControl');
-let guidedIndex=0,guidedTimer=null,guidedActive=false;
+let guidedActive=false, guidedIndex=1, animationFrame=null, pauseTimer=null, startTimer=null;
 function stopGuidedScroll(){
- guidedActive=false;clearTimeout(guidedTimer);guidedTimer=null;
+ guidedActive=false;
+ cancelAnimationFrame(animationFrame);
+ clearTimeout(pauseTimer);
  autoControl.textContent='↻ Resume auto-scroll';
 }
-function guideNext(){
+function glideToNext(){
  if(!guidedActive)return;
- if(guidedIndex>=guidedSections.length){stopGuidedScroll();autoControl.classList.remove('show');return}
- guidedSections[guidedIndex].scrollIntoView({behavior:'smooth',block:'start'});
- guidedIndex++;
- guidedTimer=setTimeout(guideNext,8500);
+ if(guidedIndex>=guidedSections.length){
+  stopGuidedScroll();
+  autoControl.textContent='↻ Replay guided tour';
+  guidedIndex=1;
+  return;
+ }
+ const target=Math.max(0,guidedSections[guidedIndex].getBoundingClientRect().top+window.scrollY-78);
+ const from=window.scrollY, distance=target-from, duration=Math.min(4200,Math.max(1700,Math.abs(distance)*1.15));
+ const started=performance.now();
+ function frame(now){
+  if(!guidedActive)return;
+  const t=Math.min(1,(now-started)/duration);
+  const eased=t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  window.scrollTo(0,from+distance*eased);
+  if(t<1)animationFrame=requestAnimationFrame(frame);
+  else{guidedIndex++;pauseTimer=setTimeout(glideToNext,4200)}
+ }
+ animationFrame=requestAnimationFrame(frame);
 }
 function startGuidedScroll(){
  if(guidedActive)return;
- guidedActive=true;autoControl.classList.add('show');autoControl.textContent='Ⅱ Pause auto-scroll';
- guideNext();
+ if(guidedIndex>=guidedSections.length)guidedIndex=1;
+ guidedActive=true;
+ autoControl.classList.add('show');
+ autoControl.textContent='Ⅱ Pause auto-scroll';
+ glideToNext();
 }
 autoControl.addEventListener('click',()=>{
  if(guidedActive)stopGuidedScroll();
  else startGuidedScroll();
 });
-let manualPause;
-['wheel','touchstart','keydown','pointerdown'].forEach(type=>{
+['wheel','touchstart','keydown'].forEach(type=>{
  window.addEventListener(type,event=>{
   if(!guidedActive)return;
-  if(type==='keydown'&&!['ArrowDown','ArrowUp','PageDown','PageUp',' '].includes(event.key))return;
-  if(type==='pointerdown'&&event.target===autoControl)return;
+  if(type==='keydown'&&!['ArrowDown','ArrowUp','PageDown','PageUp',' ','Home','End'].includes(event.key))return;
   stopGuidedScroll();
  },{passive:true});
 });
-window.addEventListener('load',()=>{setTimeout(startGuidedScroll,2200)});
+window.addEventListener('load',()=>{
+ startTimer=setTimeout(startGuidedScroll,1800);
+});
 </script>
 </body>
 </html>
