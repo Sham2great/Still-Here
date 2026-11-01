@@ -152,6 +152,7 @@ main>section{display:none!important;height:calc(100svh - 76px);min-height:0;over
 main>section.slide-active{display:block!important;animation:slideIn .72s cubic-bezier(.2,.75,.25,1) both}
 main>section.hero.slide-active{display:grid!important}
 @keyframes slideIn{from{opacity:0;transform:translateY(22px) scale(.99);filter:blur(5px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+.music-toggle{width:34px;height:34px;flex:0 0 34px;border:1px solid #cda8f077;border-radius:50%;background:#ffffff0b;color:#e6ccff;font-size:17px;cursor:pointer;display:grid;place-items:center;transition:.25s}.music-toggle:hover{background:#9b66d233;box-shadow:0 0 18px #b984e755}.music-toggle.muted{color:#887995;border-color:#ffffff20}
 .slide-controls{position:fixed;z-index:45;bottom:18px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;padding:9px 11px 9px 17px;border:1px solid #ffffff20;border-radius:40px;background:#1b1229ed;backdrop-filter:blur(18px);box-shadow:0 12px 40px #08040e88}
 .slide-counter{font-size:10px;letter-spacing:.14em;color:#bba5d1;min-width:52px}
 .slide-nav{border:1px solid #ffffff26;border-radius:30px;padding:11px 16px;background:#ffffff08;color:#e9ddf4;font-size:11px;cursor:pointer;transition:.25s}
@@ -298,7 +299,9 @@ h2{font-size:clamp(34px,4.6vw,54px);margin-bottom:12px;line-height:1}
 </head>
 <body>
 <div id="stars"></div><div id="floaters"></div>
-<div class="progress" id="progress"></div>\n<div class="slide-controls" aria-label="Slideshow controls"><span class="slide-counter" id="slideCounter">01 / 07</span><button class="slide-nav" id="prevSlide" type="button" disabled>← Back</button><button class="slide-nav next" id="nextSlide" type="button">Continue <span>→</span></button></div>
+<div class="progress" id="progress"></div>\n<audio id="introMusic" preload="auto" loop src="../Alicia%20Keys%20-%20Unthinkable%20%5BINSTRUMENTAL%5D%20%2B%20Download%20Link.mp3"></audio>
+<audio id="fullMusic" preload="auto" src="../Alicia%20Keys%20-%20Un-thinkable%20%28Im%20Ready%29%20%28Official%20Video%29.mp3"></audio>
+<div class="slide-controls" aria-label="Slideshow controls"><button class="music-toggle" id="musicToggle" type="button" aria-label="Pause music" title="Pause music">♫</button><span class="slide-counter" id="slideCounter">01 / 07</span><button class="slide-nav" id="prevSlide" type="button" disabled>← Back</button><button class="slide-nav next" id="nextSlide" type="button">Continue <span>→</span></button></div>
 <header class="topbar">
 <a class="brand" href="#home">for <span>lexxi.</span></a>
 <nav class="nav" aria-label="Main navigation"><a href="#note">the note</a><a href="#little-things">little things</a><a href="#constellation">our sky</a><a href="#question" class="nav-ask">one last thing ↗</a></nav>
@@ -454,6 +457,48 @@ document.querySelectorAll('.const-star').forEach((star,index)=>star.addEventList
 document.getElementById('yes').addEventListener('click',()=>{document.getElementById('answer').textContent='You just made me really happy. Let’s take it one genuine step at a time. 💜'});
 document.getElementById('time').addEventListener('click',()=>{document.getElementById('answer').textContent='Take the time you need. I want your answer to feel right for you. 💜'});
 
+// Music switches from the instrumental to the full track when the question slide opens.
+const introMusic=document.getElementById('introMusic');
+const fullMusic=document.getElementById('fullMusic');
+const musicToggle=document.getElementById('musicToggle');
+let musicEnabled=false;
+let fullTrackStarted=false;
+function updateMusicButton(){
+ musicToggle.classList.toggle('muted',!musicEnabled);
+ musicToggle.textContent=musicEnabled?'♫':'♪';
+ musicToggle.setAttribute('aria-label',musicEnabled?'Pause music':'Play music');
+ musicToggle.title=musicEnabled?'Pause music':'Play music';
+}
+async function playMusicForCurrentSlide(){
+ try{
+  if(currentSlide===slides.length-1){
+   introMusic.pause();
+   if(!fullTrackStarted){fullMusic.currentTime=92;fullTrackStarted=true;}
+   await fullMusic.play();
+  }else{
+   fullMusic.pause();
+   await introMusic.play();
+  }
+  musicEnabled=true;
+ }catch(error){
+  musicEnabled=false;
+ }
+ updateMusicButton();
+}
+musicToggle.addEventListener('click',async()=>{
+ if(musicEnabled){
+  introMusic.pause();fullMusic.pause();musicEnabled=false;updateMusicButton();
+ }else{
+  await playMusicForCurrentSlide();
+ }
+});
+document.addEventListener('pointerdown',()=>{
+ if(!musicEnabled)playMusicForCurrentSlide();
+},{once:true});
+introMusic.volume=.42;
+fullMusic.volume=.58;
+introMusic.play().then(()=>{musicEnabled=true;updateMusicButton()}).catch(()=>{updateMusicButton()});
+
 // Slideshow navigation: one chapter at a time, with the reader in control.
 const slides=[...document.querySelectorAll('main > section')];
 let currentSlide=0;
@@ -472,7 +517,7 @@ function showSlide(index){
  slideCounter.textContent=String(currentSlide+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
  prevSlide.disabled=currentSlide===0;
  nextSlide.innerHTML=currentSlide===slides.length-1?'Start again <span>↻</span>':'Continue <span>→</span>';
- if(slides[currentSlide].id==='question')slides[currentSlide].classList.add('question-arrived');
+ if(slides[currentSlide].id==='question'){slides[currentSlide].classList.add('question-arrived');if(musicEnabled||!fullTrackStarted)playMusicForCurrentSlide();}
  if(slides[currentSlide].id==='constellation')startStarCycle();
  if(slides[currentSlide].id==='letter')setTimeout(revealLetter,650);
 }
